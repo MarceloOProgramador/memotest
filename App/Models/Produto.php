@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Mcldb\Classes\Create;
 use Mcldb\Classes\Read;
+use Mcldb\Classes\Update;
+use PDO;
 use PDOException;
 
 class Produto {
@@ -22,11 +24,30 @@ class Produto {
         try{
           $create->toCreate("venda_produtos", $datas);
           $create->exec();
-          return true;
         }catch(PDOException $ex){
           throw new PDOException($ex->getMessage(), $ex->getCode());
           return false;
         }
+        
+        return true;
+    }
+
+    public function update(array $datas, $id) : bool
+    {
+        $update = new Update();
+        
+        try
+        {
+          $update->toUpdate("venda_produtos", $datas)->where("id", "=", "{$id}");
+          $update->exec();
+          return true;
+        }catch(PDOException $ex)
+        {
+          throw new PDOException($ex->getMessage(), $ex->getCode());
+          return false;
+        }
+
+        return true;
     }
 
 }

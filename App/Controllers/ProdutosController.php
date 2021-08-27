@@ -28,15 +28,27 @@ class ProdutosController
 
         if($stored){
             http_response_code(200);
-            return json_encode(["success" => "Cadastro realizado com sucesso!"]);
+            return json_encode(["success" => "Sucesso ao cadastrar!"]);
         }else{
             http_response_code(500);
-            return json_encode(["error" => "Erro: cadastro não realizado, tente novamente!"]);
+            return json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
         }
     }
 
     public function update($datas, $id)
     {
+        $produto = new Produto();
+        $updated = false;
+
+        $updated = $produto->update($datas, $id);
+
+        if($updated){
+            http_response_code(200);
+            return json_encode(["success" => "Sucesso ao atualizar!"]);
+        }else{
+            http_response_code(500);
+            return json_encode(["error" => "Erro ao atualizar, tente novamente!"]);
+        }
         return;
     }
 
