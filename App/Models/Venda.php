@@ -12,14 +12,14 @@ class Venda {
 
   protected $table = "venda";
 
-  public function all()
+  public function all() : array
   {
     $read = new Read();
     $sellers = array();
 
     $sellers = $read->toRead($this->table)->fetch();
     
-    return json_encode($sellers);
+    return $sellers;
   }
 
   public function save(array $datas):bool

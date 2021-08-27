@@ -31,4 +31,32 @@ class VendaTest extends TestCase
     die;
   }
 
+  public function testUpdate()
+  {
+    $id = 4;
+    $sale = new VendasController();
+
+    $sale_datas = [
+      "vendedor" => "teste Atualizado",
+      "data" => "2021-08-28",
+      "hora" => "12:00",
+      "total" => "10.00"
+    ];
+
+    $response = $sale->update($sale_datas, $id);
+
+    var_dump($response);
+    die;
+  }
+
+  public function testDelete()
+  {
+    $id = 4;
+    $sale = new VendasController();
+
+    $response = $sale->delete($id);
+
+    var_dump($response);
+    die;
+  }
 }

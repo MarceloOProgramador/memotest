@@ -1,16 +1,28 @@
 <?php declare(strict_types=1);
 
-namespace App\Controllers;
+namespace App\Controllers\API;
 
 use App\Models\Produto;
+use League\Plates\Engine;
 
 class ProdutosController
 {
+    public $view;
+
+    public function __construct()
+    {
+        $this->view = Engine::create("Views", "php");
+    }
+
     public function index()
     {
         $produto = new Produto();
         $produtos = $produto->all();
-        return json_encode($produtos);
+        
+        echo $this->view->render('home', [
+            "title" => "Produtos",
+            "products" => $produtos
+        ]);
     }
 
     public function show($id)

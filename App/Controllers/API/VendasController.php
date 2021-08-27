@@ -1,17 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace App\Controllers;
+namespace App\Controllers\API;
 
 use App\Models\Venda;
+use League\Plates\Engine;
 
 class VendasController
 {
+
     public function index()
     {
         $sale = new Venda();
         $sales = $sale->all();
         
-        return json_encode($sales);
+        echo json_encode($sales);
     }
 
     public function show($id)
