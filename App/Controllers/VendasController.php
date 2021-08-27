@@ -37,12 +37,31 @@ class VendasController
 
     public function update($datas, $id)
     {
-        return;
+        $sale = new Venda();
+        $updated = false;
+
+        $updated = $sale->update($datas, $id);
+
+        if(!$updated){
+            http_response_code(500);
+            return json_encode(["error" => "Erro ao atualizar, tente novamente!"]);
+        }
+
+        return json_encode(["success" => "Sucesso ao atualizar!"]);
     }
 
     public function delete($id)
     {
+        $sale = new Venda();
+        $deleted = false;
 
-        return;
+        $deleted = $sale->delete($id);
+
+        if(!$deleted){
+            http_response_code(500);
+            return json_encode(["error" => "Erro ao deletar, tente novamente!"]);
+        }
+
+        return json_encode(["success" => "Sucesso ao deletar!"]);
     }
 }
