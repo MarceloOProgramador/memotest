@@ -26,13 +26,13 @@ class ProdutosController
 
         $stored = $produto->save($datas);
 
-        if($stored){
-            http_response_code(200);
-            return json_encode(["success" => "Sucesso ao cadastrar!"]);
-        }else{
+        if(!$stored){
             http_response_code(500);
             return json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
         }
+
+        http_response_code(200);
+        return json_encode(["success" => "Sucesso ao cadastrar!"]);
     }
 
     public function update($datas, $id)
@@ -42,19 +42,29 @@ class ProdutosController
 
         $updated = $produto->update($datas, $id);
 
-        if($updated){
-            http_response_code(200);
-            return json_encode(["success" => "Sucesso ao atualizar!"]);
-        }else{
+        if(!$updated){
             http_response_code(500);
             return json_encode(["error" => "Erro ao atualizar, tente novamente!"]);
         }
-        return;
+
+        http_response_code(200);
+        return json_encode(["success" => "Sucesso ao atualizar!"]);
     }
 
     public function delete($id)
     {
+        $produto = new Produto();
+        $deleted = false;
 
+        $deleted = $produto->delete($id);
+
+        if(!$deleted){
+            http_response_code(500);
+            return json_encode(["error" => "Erro ao deletar, tente novamente!"]);
+        }
+
+        http_response_code(200);
+        return json_encode(["success" => "Sucesso ao deletar!"]);
         return;
     }
 }

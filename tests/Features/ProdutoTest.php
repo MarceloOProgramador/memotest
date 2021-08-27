@@ -45,4 +45,13 @@ final class ProdutoTest extends TestCase
         die;
     }
 
+    public function testDelete():void
+    {
+        $id = 1;
+        $produto_controller = new ProdutosController();
+        
+        $response = $produto_controller->delete($id);
+        var_dump($response);
+        die;
+    }
 }
