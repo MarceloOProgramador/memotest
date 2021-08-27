@@ -12,5 +12,6 @@ $route->get("/", "HomeController:index");
 
 $route->namespace("App\Controllers\API")->group("api");
 $route->get("/vendas", "VendasController:index");
+$route->post("/vendas", "VendasController:store");
 
 $route->dispatch();

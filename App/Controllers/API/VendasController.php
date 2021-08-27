@@ -22,19 +22,26 @@ class VendasController
         return;
     }
 
-    public function store($datas)
+    public function store()
     {
         $sale = new Venda();
         $stored = false;
+
+        $datas = [
+            "vendedor" => filter_input(INPUT_POST, "vendedor", FILTER_DEFAULT),
+            "total" => filter_input(INPUT_POST, "total"),
+            "data" => date("Y-m-d"),
+            "hora" => date("h:m:s")
+        ]; 
         
         $stored = $sale->save($datas);
 
         if(!$stored){
             http_response_code(500);
-            return json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
+            echo json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
         }
 
-        return json_encode(["success" => "Sucesso ao cadastrar!"]);
+        echo json_encode(["success" => "Sucesso ao cadastrar!"]);
     }
 
     public function update($datas, $id)
@@ -46,10 +53,10 @@ class VendasController
 
         if(!$updated){
             http_response_code(500);
-            return json_encode(["error" => "Erro ao atualizar, tente novamente!"]);
+            echo json_encode(["error" => "Erro ao atualizar, tente novamente!"]);
         }
 
-        return json_encode(["success" => "Sucesso ao atualizar!"]);
+        echo json_encode(["success" => "Sucesso ao atualizar!"]);
     }
 
     public function delete($id)
@@ -61,9 +68,9 @@ class VendasController
 
         if(!$deleted){
             http_response_code(500);
-            return json_encode(["error" => "Erro ao deletar, tente novamente!"]);
+            echo json_encode(["error" => "Erro ao deletar, tente novamente!"]);
         }
 
-        return json_encode(["success" => "Sucesso ao deletar!"]);
+        echo json_encode(["success" => "Sucesso ao deletar!"]);
     }
 }

@@ -15,6 +15,8 @@ class HomeController
 
     public function index()
     {        
-        echo $this->view->render("venda");
+        echo $this->view->render("venda", [
+            "title" => "home",
+        ]);
     }    
 }
