@@ -2,33 +2,47 @@
 
 namespace App\Controllers;
 
+use App\Models\Venda;
+
 class VendasController
 {
-  public function index()
-  {
-      
-      return;
-  }
+    public function index()
+    {
+        $sale = new Venda();
+        $sales = $sale->all();
+        
+        return json_encode($sales);
+    }
 
-  public function show($id)
-  {
+    public function show($id)
+    {
 
-      return;
-  }
+        return;
+    }
 
-  public function store($datas, $id)
-  {
-      
-  }
+    public function store($datas)
+    {
+        $sale = new Venda();
+        $stored = false;
+        
+        $stored = $sale->save($datas);
 
-  public function update($datas, $id)
-  {
-      return;
-  }
+        if(!$stored){
+            http_response_code(500);
+            return json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
+        }
 
-  public function delete($id)
-  {
+        return json_encode(["success" => "Sucesso ao cadastrar!"]);
+    }
 
-      return;
-  }
+    public function update($datas, $id)
+    {
+        return;
+    }
+
+    public function delete($id)
+    {
+
+        return;
+    }
 }
