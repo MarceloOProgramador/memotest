@@ -9,7 +9,7 @@ use Mcldb\Classes\Update;
 use PDOException;
 
 class Produto {
-     
+
     public function all() : array
     {
       $read = new Read();

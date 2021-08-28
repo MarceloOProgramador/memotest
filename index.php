@@ -20,4 +20,5 @@ $route->get("/vendas", "VendasController:index");
 //Produtos ROUTE API
 $route->get("/produtos", "ProdutosController:index");
 $route->post("/produtos", "ProdutosController:store");
+$route->get("/vendas/{search}", "VendasController:search");
 $route->dispatch();

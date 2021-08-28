@@ -13,6 +13,13 @@ class Venda {
   protected $table = "venda";
   public $last_inserted_id;
 
+  public function find(string $search)
+  {
+    $read = new Read();
+    $datas = $read->toRead("venda")->where("vendedor", "LIKE", "{$search}%")->fetch();
+    return $datas;
+  }
+
   public function all() : array
   {
     $read = new Read();

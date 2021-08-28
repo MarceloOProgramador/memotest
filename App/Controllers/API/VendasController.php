@@ -65,4 +65,12 @@ class VendasController
 
         echo json_encode(["success" => "Sucesso ao deletar!"]);
     }
+
+    public function search($datas)
+    {
+        $sales = new Venda();
+        $datas = $sales->find($datas["search"]);
+        
+        echo json_encode($datas);
+    }
 }
