@@ -3,10 +3,10 @@
 namespace App\Controllers\API;
 
 use App\Models\Venda;
-use League\Plates\Engine;
 
 class VendasController
 {
+    
 
     public function index()
     {
@@ -16,32 +16,24 @@ class VendasController
         echo json_encode($sales);
     }
 
-    public function show($id)
-    {
-
-        return;
-    }
-
-    public function store()
+    public function store($datas) : bool
     {
         $sale = new Venda();
         $stored = false;
-
         $datas = [
-            "vendedor" => filter_input(INPUT_POST, "vendedor", FILTER_DEFAULT),
-            "total" => filter_input(INPUT_POST, "total"),
+            "vendedor" => $datas["vendedor"],
+            "total" => $datas["total"],
             "data" => date("Y-m-d"),
             "hora" => date("h:m:s")
         ]; 
         
         $stored = $sale->save($datas);
-
+        
         if(!$stored){
-            http_response_code(500);
-            echo json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
+            return false;
         }
-
-        echo json_encode(["success" => "Sucesso ao cadastrar!"]);
+        
+        return true;
     }
 
     public function update($datas, $id)

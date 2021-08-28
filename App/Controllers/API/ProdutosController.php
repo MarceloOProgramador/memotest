@@ -3,48 +3,53 @@
 namespace App\Controllers\API;
 
 use App\Models\Produto;
-use League\Plates\Engine;
+use App\Models\Venda;
 
 class ProdutosController
 {
-    public $view;
-
-    public function __construct()
-    {
-        $this->view = Engine::create("Views", "php");
-    }
-
     public function index()
     {
         $produto = new Produto();
         $produtos = $produto->all();
         
-        echo $this->view->render('home', [
-            "title" => "Produtos",
-            "products" => $produtos
-        ]);
+        echo json_encode($produtos);
     }
 
-    public function show($id)
+    public function store()
     {
-         
-        return;
-    }
-
-    public function store($datas)
-    {
-        $produto = new Produto();
+        $products = filter_input(INPUT_POST, "products", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+        $seller = [
+            "vendedor" => filter_input(INPUT_POST, "vendedor", FILTER_DEFAULT),
+            "total" => filter_input(INPUT_POST, "total", FILTER_DEFAULT),
+            "data" => date("Y-m-d"),
+            "hora" => date("h:i:s")
+        ];
         $stored = false;
+        $product = new Produto();
+        $sale = new Venda();
 
-        $stored = $produto->save($datas);
+        $stored = $sale->save($seller);
 
         if(!$stored){
             http_response_code(500);
-            return json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
+            echo json_encode(["error" => "Erro ao cadastrar vendedor, tente novamente!"]);
+            return;
         }
-
+        
+        foreach($products as $prod)
+        {
+            $prod["id_venda"] = $sale->last_inserted_id;
+            $stored = $product->save($prod);
+    
+            if(!$stored){
+                http_response_code(500);
+                echo json_encode(["error" => "Erro ao cadastrar, tente novamente!"]);
+                return;
+            }
+        }      
+    
         http_response_code(200);
-        return json_encode(["success" => "Sucesso ao cadastrar!"]);
+        echo json_encode(["success" => "Sucesso ao cadastrar!"]);   
     }
 
     public function update($datas, $id)

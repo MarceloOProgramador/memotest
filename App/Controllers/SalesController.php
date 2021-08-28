@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use League\Plates\Engine;
 
-class HomeController
+class SalesController
 {
     public $view;
 
@@ -15,8 +15,8 @@ class HomeController
 
     public function index()
     {        
-        echo $this->view->render("venda", [
-            "title" => "home",
+        echo $this->view->render("sales", [
+            "title" => "Vendas",
         ]);
     }    
 }

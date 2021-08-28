@@ -11,6 +11,7 @@ use PDOException;
 class Venda {
 
   protected $table = "venda";
+  public $last_inserted_id;
 
   public function all() : array
   {
@@ -29,10 +30,12 @@ class Venda {
     try{
       $create->toCreate($this->table, $datas);
       $create->exec();
+      $this->last_inserted_id = $create->getInstance()->lastInsertId();
     }catch(PDOException $ex){
       throw new PDOException($ex->getMessage(), $ex->getCode());
       return false;
     }
+
     return true;
   }
 
@@ -47,6 +50,7 @@ class Venda {
       throw new PDOException($ex->getMessage(), $ex->getCode());
       return false;
     }
+
     return true;
   }
 
@@ -60,6 +64,7 @@ class Venda {
       throw new PDOException($ex->getMessage(), $ex->getCode());
       return false;
     }
+
     return true;
   } 
 }
